@@ -41,7 +41,18 @@ const App: React.FC = () => {
 
   // todo削除
   const onClickDelete = (todoId: number) => {
-    const newTodos = todos.filter((t) => t.id !== todoId);
+    const newTodos: Todo[] = todos.filter((t) => t.id !== todoId);
+    setTodos(newTodos)
+  }
+
+  // todo戻す
+  const onClickReturn = (todoId: number) => {
+    const newTodos: Todo[] = todos.map((t) => {
+      if(t.id === todoId) {
+        t.done = !t.done;
+      }
+      return t;
+    })
     setTodos(newTodos)
   }
 
@@ -79,7 +90,7 @@ const App: React.FC = () => {
               return (
                 <li key={todo.id}>
                   <span>{todo.todo}</span>
-                  <button>戻す</button>
+                  <button onClick={() => onClickReturn(todo.id)}>戻す</button>
                   <button onClick={() => onClickDelete(todo.id)}>削除</button>
                 </li>
               )
