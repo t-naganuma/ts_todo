@@ -39,6 +39,12 @@ const App: React.FC = () => {
     setTodos(editTodo);
   }
 
+  // todo削除
+  const onClickDelete = (todoId: number) => {
+    const newTodos = todos.filter((t) => t.id !== todoId);
+    setTodos(newTodos)
+  }
+
   return (
     <div className="App">
       <h1>Todo</h1>
@@ -58,7 +64,7 @@ const App: React.FC = () => {
                 <li key={todo.id}>
                   <span>{todo.todo}</span>
                   <button onClick={() => completeTodo(todo)}>完了</button>
-                  <button>削除</button>
+                  <button onClick={() => onClickDelete(todo.id)}>削除</button>
                 </li>
               )
             }
@@ -74,7 +80,7 @@ const App: React.FC = () => {
                 <li key={todo.id}>
                   <span>{todo.todo}</span>
                   <button>戻す</button>
-                  <button>削除</button>
+                  <button onClick={() => onClickDelete(todo.id)}>削除</button>
                 </li>
               )
             }
