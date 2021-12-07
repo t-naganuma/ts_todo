@@ -1,24 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Todo</h1>
+      <select name="conmpleteOrIncomplete" className="selectBox">
+        <option value=""></option>
+        <option value="incomplete">未完了</option>
+        <option value="complete">完了</option>
+      </select>
+      <form className="form">
+        <input type="text" placeholder="todo" />
+        <button type="submit">todo追加</button>
+      </form>
+      <section className="incompleteArea">
+        <h2>未完了</h2>
+        <ul className="lists">
+          <li>aaa</li>
+        </ul>
+      </section>
+      <section className="completeArea">
+        <h2>完了</h2>
+        <ul className="lists">
+          <li></li>
+        </ul>
+      </section>
     </div>
   );
 }
