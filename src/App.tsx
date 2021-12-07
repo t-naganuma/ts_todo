@@ -11,10 +11,10 @@ const App: React.FC = () => {
   const [todoText, setTodoText] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [count, setCount] = useState<number>(1);
-  const [completeTodos, setCompleteTodos] = useState([]);
 
   const onChangeTodoText = (event: React.ChangeEvent<HTMLInputElement>) => setTodoText(event.target.value);
 
+  // todo追加
   const addTodo = () => {
     if(!todoText) return;
     setCount(count + 1);
@@ -25,6 +25,18 @@ const App: React.FC = () => {
     };
     setTodos([...todos, newTodo]);
     setTodoText("");
+  }
+
+  // todo完了
+  const completeTodo = (todo: Todo) => {
+    const editTodo: Todo[] = todos.map((t) => {
+      if(t.id === todo.id) {
+        t.done = !t.done;
+      }
+      return t;
+    });
+
+    setTodos(editTodo);
   }
 
   return (
@@ -41,28 +53,32 @@ const App: React.FC = () => {
         <h2>未完了</h2>
         <ul className="lists">
           {todos.map((todo) => {
-            return  (
-              <li key={todo.id}>
-                <span>{todo.todo}</span>
-                <button>完了</button>
-                <button>削除</button>
-              </li>
-            )
+            if(!todo.done) {
+              return (
+                <li key={todo.id}>
+                  <span>{todo.todo}</span>
+                  <button onClick={() => completeTodo(todo)}>完了</button>
+                  <button>削除</button>
+                </li>
+              )
+            }
           })}
         </ul>
       </section>
       <section className="completeArea">
         <h2>完了</h2>
         <ul className="lists">
-          {/* {completeTodos.map((todo) => {
-              return  (
-                <li key={todo}>
-                  <span>{todo}</span>
+          {todos.map((todo) => {
+            if(todo.done) {
+              return (
+                <li key={todo.id}>
+                  <span>{todo.todo}</span>
                   <button>戻す</button>
                   <button>削除</button>
                 </li>
               )
-          })} */}
+            }
+          })}
         </ul>
       </section>
     </div>
