@@ -29,7 +29,7 @@
   padding: 8px;
 }
 
-.lists li span {
+.lists > li > span {
   margin: 0 8px 0 0;
 }
 .lists li button:not(:last-child) {

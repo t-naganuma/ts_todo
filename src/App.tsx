@@ -17,7 +17,7 @@ const App: React.FC = () => {
   // todo追加
   const addTodo = () => {
     if(!todoText) return;
-    setCount(count + 1);
+    setCount((prevCount) => prevCount + 1);
     const newTodo: Todo = {
       id: count,
       todo: todoText,
@@ -29,7 +29,7 @@ const App: React.FC = () => {
 
   // todo完了
   const completeTodo = (todo: Todo) => {
-    const editTodo: Todo[] = todos.map((t) => {
+    const editTodo = todos.map((t) => {
       if(t.id === todo.id) {
         t.done = !t.done;
       }
@@ -41,13 +41,13 @@ const App: React.FC = () => {
 
   // todo削除
   const onClickDelete = (todoId: number) => {
-    const newTodos: Todo[] = todos.filter((t) => t.id !== todoId);
+    const newTodos = todos.filter((t) => t.id !== todoId);
     setTodos(newTodos)
   }
 
   // todo戻す
   const onClickReturn = (todoId: number) => {
-    const newTodos: Todo[] = todos.map((t) => {
+    const newTodos = todos.map((t) => {
       if(t.id === todoId) {
         t.done = !t.done;
       }
@@ -59,42 +59,38 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <h1>Todo</h1>
-      <form className="form" onClick={(event) => {
+      <form className="form" onSubmit={(event) => {
         event.preventDefault();
         addTodo();
       }}>
-        <input type="text" placeholder="todo" value={todoText} onChange={(event) => onChangeTodoText(event)} />
-        <button type="submit" onSubmit={addTodo}>todo追加</button>
+        <input type="text" placeholder="todo" value={todoText} onChange={onChangeTodoText} />
+        <button type="submit">todo追加</button>
       </form>
       <section className="incompleteArea">
         <h2>未完了</h2>
         <ul className="lists">
-          {todos.map((todo) => {
-            if(!todo.done) {
-              return (
-                <li key={todo.id}>
-                  <span>{todo.todo}</span>
-                  <button onClick={() => completeTodo(todo)}>完了</button>
-                  <button onClick={() => onClickDelete(todo.id)}>削除</button>
-                </li>
-              )
-            }
+          {todos.filter((todo) => !todo.done).map((todo) => {
+            return (
+              <li key={todo.id}>
+                <span>{todo.todo}</span>
+                <button onClick={() => completeTodo(todo)}>完了</button>
+                <button onClick={() => onClickDelete(todo.id)}>削除</button>
+              </li>
+            )
           })}
         </ul>
       </section>
       <section className="completeArea">
         <h2>完了</h2>
         <ul className="lists">
-          {todos.map((todo) => {
-            if(todo.done) {
-              return (
-                <li key={todo.id}>
-                  <span>{todo.todo}</span>
-                  <button onClick={() => onClickReturn(todo.id)}>戻す</button>
-                  <button onClick={() => onClickDelete(todo.id)}>削除</button>
-                </li>
-              )
-            }
+          {todos.filter((todo) => todo.done).map((todo) => {
+            return (
+              <li key={todo.id}>
+                <span>{todo.todo}</span>
+                <button onClick={() => onClickReturn(todo.id)}>戻す</button>
+                <button onClick={() => onClickDelete(todo.id)}>削除</button>
+              </li>
+            )
           })}
         </ul>
       </section>
