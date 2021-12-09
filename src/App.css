@@ -16,10 +16,6 @@
   padding: 12px;
 }
 
-.selectBox {
-  padding: 8px;
-}
-
 .form {
   margin: 24px 0 0 0;
 }
@@ -31,4 +27,11 @@
 
 .form button {
   padding: 8px;
+}
+
+.lists > li > span {
+  margin: 0 8px 0 0;
+}
+.lists li button:not(:last-child) {
+  margin: 0 8px 0 0;
 }
